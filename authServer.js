@@ -5,45 +5,24 @@ const jwt = require("jsonwebtoken");
 const port = 6000;
 
 const app = express();
-app.use(cors());
 app.use(express.json());
-
-const userInfo = [
-  {
-    username: "anuj",
-    events: [
-      { eventName: "event1", date: "2022" },
-      { eventName: "event2", date: "2021" },
-      { eventName: "event3", date: "2020" },
-    ],
-  },
-  {
-    username: "rathore",
-    events: [{ eventName: "event2", date: "2022" }],
-  },
-];
-app.get("/", authenticateToken, (req, res) => {
-    console.log(req.user)
-    res.json(userInfo.filter( userInfo=>userInfo.username===req.user.name))
-
-});
+app.use(cors());
 
 app.post("/login", (req, res) => {
   // to authenticate user
-
   const username = req.body.username;
   const user = { name: username };
-    console.log(user)
+  console.log(user);
   const token = generateAccessToken(user);
-  const refreshToken=jwt.sign(user, process.env.REFRESH_TOKEN);
-  res.json({ accessToken: token ,refreshToken:refreshToken});
+  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN);
+  res.json({ accessToken: token, refreshToken: refreshToken });
 });
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
-  console.log(token)
+  if (token == null) return res.send("<a href='/login'>Login First</a>");
+  console.log(token);
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
@@ -51,8 +30,11 @@ function authenticateToken(req, res, next) {
   });
 }
 
-function generateAccessToken(user){
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{expiresIn:"10s"});
+function generateAccessToken(user) {
+  // token with expiry time of 10s
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "10s" });
 }
 
-app.listen(port, () => console.log(`The server started on port ${port}`));
+app.listen(port, () => console.log(`AuthServer started on port ${port}`));
+
+module.exports={authenticateToken}
