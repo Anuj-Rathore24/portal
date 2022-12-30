@@ -6,25 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link type="text/css" rel="stylesheet" href="/login.css" />
+    <script src="./login.js"></script>
   </head>
   <body>
     <div id="mainContainer">
         <input type="text" name="userName" id="inputUserName" />
         <button onclick="submitFunction(event)">submit request</button>
     </div>
-    <script>
-        async function submitFunction(e){
-            e.preventDefault();
-            console.log("working")
-            await fetch("http://localhost:6000/login",{
-                method:"POST",
-                mode:"cors",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({username:"testing"})
-            })
-        }
-    </script>
+
   </body>
 </html>
