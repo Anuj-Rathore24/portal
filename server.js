@@ -7,7 +7,7 @@ const {eventSchema} = require("./graphqlEvents");
 const expressGraphQL = require("express-graphql").graphqlHTTP;
 
 
-let userInfo = require("./userData.json");
+let userInfo = require("./data/userData.json");
 const port = 5000;
 const app = express();
 

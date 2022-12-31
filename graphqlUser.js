@@ -1,5 +1,5 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLString,GraphQLList, GraphQLInt } = require("graphql");
-let userInfo = require("./userData.json");
+let userInfo = require("./data/userData.json");
 
 
 const userEvents=new GraphQLObjectType({
@@ -23,7 +23,7 @@ const user=new GraphQLObjectType({
 
 const userSchema = new GraphQLSchema({
     query: new GraphQLObjectType({
-      name: "Root",
+      name: "UserQueries",
       description:"Main Query Object",
       fields: () => ({
         user:{
