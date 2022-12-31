@@ -1,9 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const path=require("path")
-const port = 5000;
 const {authenticateToken,login} = require("./authServer.js")
+const expressGraphQL = require('express-graphql').graphqlHTTP
+const {GraphQLSchema,GraphQLObjectType,GraphQLString} =require("graphql")
+
+const port = 5000;
 const app = express();
+
+
 app.use(cors());
 app.use(express.json()); // to extract data from post requests(not for get request)
 app.set("view engine","ejs")
@@ -25,6 +30,24 @@ const userInfo = [
     events: [{ eventName: "event2", date: "2022" }],
   },
 ];
+
+const schema=new GraphQLSchema({
+  query:new GraphQLObjectType({
+    name:"testing",
+    fields:()=>({
+      message:{
+        type:GraphQLString,
+        resolve:()=>"working i guess"
+      }
+    })
+  })
+
+})
+app.use('/graphql', expressGraphQL({
+  schema: schema,
+  graphiql: true
+}))
+
 app.get("/",(req,res)=>{
   
   res.render("home");

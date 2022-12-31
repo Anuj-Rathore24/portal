@@ -13,21 +13,25 @@ function login(u) {
 };
 
 function authenticateToken(req, res, next) {
-  console.log(req.headers);
+  console.log("This is working!")
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) return res.send("<a href='/login'>Login First</a>");
-  console.log("its working bitch ->"+token);
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
+  
+  try {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) throw err;
+      req.user = user;
+      next();
+    });
+  } catch (error) {
+    res.json(error)
+  }
 }
 
 function generateAccessToken(user) {
-  // token with expiry time of 10s
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "60s" });
+  // token with expiry time of 5m
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "5m" });
 }
 
 
