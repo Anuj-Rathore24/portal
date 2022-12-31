@@ -1,69 +1,75 @@
 const express = require("express");
 const cors = require("cors");
-const path=require("path")
-const {authenticateToken,login} = require("./authServer.js")
-const expressGraphQL = require('express-graphql').graphqlHTTP
-const {GraphQLSchema,GraphQLObjectType,GraphQLString} =require("graphql")
+const path = require("path");
+const { authenticateToken, login } = require("./authServer.js");
+const {userSchema} = require("./graphqlUser");
+const {eventSchema} = require("./graphqlEvents");
+const expressGraphQL = require("express-graphql").graphqlHTTP;
 
+
+let userInfo = require("./userData.json");
 const port = 5000;
 const app = express();
 
-
 app.use(cors());
 app.use(express.json()); // to extract data from post requests(not for get request)
-app.set("view engine","ejs")
-app.use(express.urlencoded())
-app.use(express.static(path.join(__dirname, "/public")));// to serve public files like css and js
+app.set("view engine", "ejs");
+app.use(express.urlencoded());
+app.use(express.static(path.join(__dirname, "/public"))); // to serve public files like css and js
 
-
-const userInfo = [
-  {
-    username: "anuj",
-    events: [
-      { eventName: "event1", date: "2022" },
-      { eventName: "event2", date: "2021" },
-      { eventName: "event3", date: "2020" },
-    ],
-  },
-  {
-    username: "rathore",
-    events: [{ eventName: "event2", date: "2022" }],
-  },
-];
-
-const schema=new GraphQLSchema({
-  query:new GraphQLObjectType({
-    name:"testing",
-    fields:()=>({
-      message:{
-        type:GraphQLString,
-        resolve:()=>"working i guess"
-      }
-    })
+// make queries for user 
+app.use(
+  "/queryUser",
+  expressGraphQL({
+    schema: userSchema,
+    graphiql: true,
   })
+  );
+// make queries for event 
+app.use(
+  "/queryEvents",
+  expressGraphQL({
+    schema: eventSchema,
+    graphiql: true,
+  })
+);
 
-})
-app.use('/graphql', expressGraphQL({
-  schema: schema,
-  graphiql: true
-}))
+//Routes
 
-app.get("/",(req,res)=>{
-  
+//Home Page
+app.get("/", (req, res) => {
   res.render("home");
-})
-
+});
+//Get userInfo After Homepage Loads
 app.get("/getUser", authenticateToken, (req, res) => {
-  console.log("User that requested this ->"+req.user);
-  res.json(userInfo.filter((userInfo) => userInfo.username === req.user.name));
+  let userList = userInfo.filter(
+    (userInfo) => userInfo.username === req.user.name
+  );
+  console.log(userList)
+  // Code to add new user, but is not neccesary right now 
+  // if (userList=='') {
+  //   const newUser={
+  //     username: req.user.name,
+  //     events: [],
+  //   }
+  //   userInfo.push(newUser);
+  //   fs.writeFileSync("data.json",JSON.stringify(userInfo),(err)=>{
+  //     if(err) throw err;
+  //     console.log("New User Added")
+  //   })
+
+  //   res.json(newUser)
+  // }
+  res.json(userList);
 });
 
-app.get("/login",(req,res)=>{
-    res.render("login")
-})
-
-app.post("/addUser",(req,res)=>{
+//login Page
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+//Create Token! And Add User
+app.post("/addUser", (req, res) => {
   // console.log(login(req.body.username))
-  res.send(login(req.body.username))
-})
+  res.send(login(req.body.username));
+});
 app.listen(port, () => console.log(`Main server started on port ${port}`));

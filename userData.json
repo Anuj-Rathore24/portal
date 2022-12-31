@@ -1,0 +1,38 @@
+[
+    {
+        "userId":1,
+        "username": "anuj",
+        "events": [
+            {
+                "eventId":1,
+                "eventName": "event1"
+            },
+            {
+                "eventId":2,
+                "eventName": "event2"
+            },
+            {
+                "eventId":3,
+                "eventName": "event3"
+            }
+        ]
+    },
+    {
+        "userId":2,
+        "username": "rathore",
+        "events": [
+            {
+                "eventId":2,
+                "eventName": "event2"
+            }
+        ]
+    },
+    {
+        "userId":3,
+        "username": "ghibli",
+        "events": [{
+            "eventId":1,
+            "eventName": "event1"
+        }]
+    }
+]

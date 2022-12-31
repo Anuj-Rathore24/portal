@@ -16,7 +16,6 @@ function authenticateToken(req, res, next) {
   console.log("This is working!")
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.send("<a href='/login'>Login First</a>");
   
   try {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {

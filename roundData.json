@@ -1,0 +1,23 @@
+[
+    {
+        "roundId":1,
+        "roundName":"round1",
+        "roundType":"MCQ",
+        "totalScore":50,
+        "questions":[1,3]
+    },
+    {
+        "roundId":2,
+        "roundName":"r2",
+        "roundType":"MCQ",
+        "totalScore":20,
+        "questions":[2]
+    },
+    {
+        "roundId":3,
+        "roundName":"d2",
+        "roundType":"MCQ",
+        "totalScore":30,
+        "questions":[4]
+    }
+]

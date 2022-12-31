@@ -1,0 +1,16 @@
+[
+    {
+        "eventId":1,
+        "eventName":"event1",
+        "eventDate":"2022-09-24",
+        "roundIds":[1,3],
+        "participants":[1,3]
+    },
+    {
+        "eventId":2,
+        "eventName":"event1",
+        "eventDate":"2021-09-24",
+        "roundIds":[1],
+        "participants":[2]
+    }
+]

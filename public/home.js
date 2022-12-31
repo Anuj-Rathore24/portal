@@ -20,6 +20,7 @@ window.onload = async function () {
         alert("Your Token has been expired");
         window.location = "/login";
       }
+      console.log(re)
       document.getElementById("mainContainerHome").innerHTML=JSON.stringify(re[0].events);
     })
     .catch((err) => {
