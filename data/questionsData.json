@@ -47,7 +47,7 @@
     },
     {
         "questionId":3,
-        "questionName":"q1",
+        "questionName":"q3",
         "options":[
             {
                 "optionsId":1,
@@ -67,5 +67,28 @@
             }
         ],
         "answer":1
+    },
+    {
+        "questionId":4,
+        "questionName":"q4",
+        "options":[
+            {
+                "optionsId":1,
+                "option":"option1"
+            },
+            {
+                "optionsId":2,
+                "option":"option2"
+            },
+            {
+                "optionsId":3,
+                "option":"option3"
+            },
+            {
+                "optionsId":4,
+                "option":"option4"
+            }
+        ],
+        "answer":4
     }
 ]

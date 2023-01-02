@@ -8,9 +8,9 @@
     },
     {
         "eventId":2,
-        "eventName":"event1",
+        "eventName":"event2",
         "eventDate":"2021-09-24",
-        "roundIds":[1],
+        "roundIds":[2],
         "participants":[2]
     }
 ]
