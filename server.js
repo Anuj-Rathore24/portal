@@ -5,6 +5,7 @@ const { authenticateToken, login } = require("./authServer.js");
 const {userSchema} = require("./graphqlUser");
 const {eventSchema} = require("./graphqlEvents");
 const expressGraphQL = require("express-graphql").graphqlHTTP;
+// const {db}=require("./database")
 
 
 let userInfo = require("./data/userData.json");
